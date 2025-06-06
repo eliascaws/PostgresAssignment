@@ -11,8 +11,8 @@
 <form th:action="@{/admin/add-game}" method="post">
   Name: <input type="text" th:field="*{team.name}" />
   Region: <select th:field="*{team.region}">
-  <option th:each="r : ${T(com.example.model.Region).values()}"
-          th:value="${r}" th:text="${r}"></option>
+  <option th:each="region : ${regions}"
+          th:value="${region}" th:text="${region}"></option>
 </select>
   Logo URL: <input type="text" th:field="*{team.logoUrl}" />
   <button type="submit">Add Team</button>
@@ -27,12 +27,12 @@
 <form th:action="@{/add-match}" method="post">
     Team 1:
     <select th:field="*{match.team1.id}" required>
-        <option th:each="${teams}" th:value="${team.id}" th:text="team.name"></option>
+        <option th:each="team : ${teams}" th:value="${team.id}" th:text="${team.name}"></option>
     </select><br/>
 
     Team 2:
     <select th:field="*{match.team2.id}" required>
-        <option th:each="${teams}" th:value="${team.id}" th:text="team.name"></option>
+        <option th:each="team : ${teams}" th:value="${team.id}" th:text="${team.name}"></option>
     </select><br/>
 
     Time

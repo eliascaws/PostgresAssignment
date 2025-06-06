@@ -7,10 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import se.elias.postgresassignment.model.Match;
-import se.elias.postgresassignment.model.MatchRepository;
-import se.elias.postgresassignment.model.Team;
-import se.elias.postgresassignment.model.TeamRepository;
+import se.elias.postgresassignment.model.*;
 
 import java.util.List;
 
@@ -37,6 +34,7 @@ public class HomeController {
     public String adminPage(Model model) {
         model.addAttribute("team", new Team());
         model.addAttribute("match", new Match());
+        model.addAttribute("regions", Region.values());
         model.addAttribute("teams", teamRepository.findAll());
         return "admin";
     }
@@ -52,7 +50,7 @@ public class HomeController {
         if (match.getTeam1().getId().equals(match.getTeam2().getId())){
             model.addAttribute("match", match);
             model.addAttribute("team", new Team());
-            model.addAttribute("tems", teamRepository.findAll());
+            model.addAttribute("teams", teamRepository.findAll());
             model.addAttribute("error", "Team 1 and 2 must be different");
             return "admin";
         }

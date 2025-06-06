@@ -16,6 +16,7 @@
 
     <img th:src="${match.team2.logoUrl}" alt="Team 2 Logo" width="50"/>
     <span th:text="${match.team2.name}">Team 2</span>
+      <p th:text="${#temporals.format(match.scheduledTime, 'yyyy-MM-dd HH:mm')}"></p>
   </div>
 </div>
 
