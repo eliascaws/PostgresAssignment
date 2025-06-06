@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin</title>
+</head>
+<body>
+<h1>Admin Panel</h1>
+
+<h2>Add Team</h2>
+<form th:action="@{/admin/add-game}" method="post">
+  Name: <input type="text" th:field="*{team.name}" />
+  Region: <select th:field="*{team.region}">
+  <option th:each="r : ${T(com.example.model.Region).values()}"
+          th:value="${r}" th:text="${r}"></option>
+</select>
+  Logo URL: <input type="text" th:field="*{team.logoUrl}" />
+  <button type="submit">Add Team</button>
+</form>
+
+<hr/>
+
+<h2>Add match to schedule</h2>
+
+<p th:if="${error}" th:text="${error}" style="color: red;"></p>
+
+<form th:action="@{/add-match}" method="post">
+    Team 1:
+    <select th:field="*{match.team1.id}" required>
+        <option th:each="${teams}" th:value="${team.id}" th:text="team.name"></option>
+    </select><br/>
+
+    Team 2:
+    <select th:field="*{match.team2.id}" required>
+        <option th:each="${teams}" th:value="${team.id}" th:text="team.name"></option>
+    </select><br/>
+
+    Time
+    <input type="datetime-local" th:field="*{match.scheduledTime}" required /><br/>
+
+    <button type="submit">Add Match</button>
+</form>
+
+<br/>
+<a th:href="@{/logout}">Logout</a>
+</body>
+</html>

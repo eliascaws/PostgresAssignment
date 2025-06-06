@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>LoL Esports Schedule</title>
+</head>
+<body>
+<h1>League of Legends schedule</h1>
+
+<div th:each="match : ${matches}">
+  <div>
+    <img th:src="${match.team1.logoUrl}" alt="Team 1 Logo" width="50"/>
+    <span th:text="${match.team1.name}">Team 1</span>
+
+    vs
+
+    <img th:src="${match.team2.logoUrl}" alt="Team 2 Logo" width="50"/>
+    <span th:text="${match.team2.name}">Team 2</span>
+  </div>
+</div>
+
+<br/>
+<a th:href="@{login}">Admin Login</a>
+</body>
+</html>
