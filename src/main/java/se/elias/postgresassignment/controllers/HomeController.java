@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import se.elias.postgresassignment.model.*;
+import se.elias.postgresassignment.service.MatchService;
 
 import java.util.List;
 
@@ -16,11 +17,13 @@ public class HomeController {
 
     private final MatchRepository matchRepository;
     private final TeamRepository teamRepository;
+    private final MatchService matchService;
 
     @Autowired
-    public HomeController(MatchRepository matchRepository, TeamRepository teamRepository) {
+    public HomeController(MatchRepository matchRepository, TeamRepository teamRepository, MatchService matchService) {
         this.matchRepository = matchRepository;
         this.teamRepository = teamRepository;
+        this.matchService = matchService;
     }
 
     @GetMapping("/")
@@ -47,11 +50,13 @@ public class HomeController {
 
     @PostMapping("/add-match")
     public String addMatch(@ModelAttribute("match") Match match, Model model) {
-        if (match.getTeam1().getId().equals(match.getTeam2().getId())){
+        try{
+            matchService.createMatch(match);
+        } catch (IllegalArgumentException e) {
             model.addAttribute("match", match);
             model.addAttribute("team", new Team());
             model.addAttribute("teams", teamRepository.findAll());
-            model.addAttribute("error", "Team 1 and 2 must be different");
+            model.addAttribute("error", e.getMessage());
             return "admin";
         }
 
