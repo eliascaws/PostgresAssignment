@@ -3,45 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <title>Admin</title>
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-<h1>Admin Panel</h1>
+<div class="navbar">
+    <div><strong>LoL Esports Schedule</strong></div>
+    <div>
+        <a href="/home">Scheduling</a>
+        <a href="/login">Admin</a>
+    </div>
+</div>
+<div class="container">
+    <h1>Admin Panel</h1>
 
-<h2>Add Team</h2>
-<form th:action="@{/admin/add-game}" method="post">
-  Name: <input type="text" th:field="*{team.name}" />
-  Region: <select th:field="*{team.region}">
-  <option th:each="region : ${regions}"
-          th:value="${region}" th:text="${region}"></option>
-</select>
-  Logo URL: <input type="text" th:field="*{team.logoUrl}" />
-  <button type="submit">Add Team</button>
-</form>
+    <h2>Add Team</h2>
+    <form th:action="@{/admin/add-game}" method="post" style="margin-bottom: 2rem;">
+        <label style="color: #b2dfdb;">Name:</label>
+        <input type="text" th:field="*{team.name}" class="input" />
+        <label style="color: #b2dfdb;">Region:</label>
+        <select th:field="*{team.region}" class="input">
+            <option th:each="region : ${regions}" th:value="${region}" th:text="${region}"></option>
+        </select>
+        <label style="color: #b2dfdb;">Logo URL:</label>
+        <input type="text" th:field="*{team.logoUrl}" class="input" />
+        <button type="submit" class="button">Add Team</button>
+    </form>
 
-<hr/>
+    <hr style="border-color: #333;"/>
 
-<h2>Add match to schedule</h2>
+    <h2>Add match to schedule</h2>
+    <p th:if="${error}" th:text="${error}" style="color: #ff5252;"></p>
+    <form th:action="@{/add-match}" method="post">
+        <label style="color: #b2dfdb;">Team 1:</label>
+        <select th:field="*{match.team1.id}" required class="input">
+            <option th:each="team : ${teams}" th:value="${team.id}" th:text="${team.name}"></option>
+        </select>
+        <br/>
+        <label style="color: #b2dfdb;">Team 2:</label>
+        <select th:field="*{match.team2.id}" required class="input">
+            <option th:each="team : ${teams}" th:value="${team.id}" th:text="${team.name}"></option>
+        </select>
+        <br/>
+        <label style="color: #b2dfdb;">Time:</label>
+        <input type="datetime-local" th:field="*{match.scheduledTime}" required class="input" />
+        <br/>
+        <button type="submit" class="button">Add Match</button>
+    </form>
 
-<p th:if="${error}" th:text="${error}" style="color: red;"></p>
-
-<form th:action="@{/add-match}" method="post">
-    Team 1:
-    <select th:field="*{match.team1.id}" required>
-        <option th:each="team : ${teams}" th:value="${team.id}" th:text="${team.name}"></option>
-    </select><br/>
-
-    Team 2:
-    <select th:field="*{match.team2.id}" required>
-        <option th:each="team : ${teams}" th:value="${team.id}" th:text="${team.name}"></option>
-    </select><br/>
-
-    Time
-    <input type="datetime-local" th:field="*{match.scheduledTime}" required /><br/>
-
-    <button type="submit">Add Match</button>
-</form>
-
-<br/>
-<a th:href="@{/logout}">Logout</a>
+    <br/>
+    <a th:href="@{/logout}" class="button" style="background: #222; color: #1de9b6; border: 1px solid #1de9b6;">Logout</a>
+</div>
 </body>
 </html>
