@@ -3,26 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <title>LoL Esports Schedule</title>
-    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-<div class="navbar">
-    <div><strong>LoL Esports Schedule</strong></div>
-    <div>
-        <a href="/home">Scheduling</a>
-        <a href="/login">Admin</a>
-    </div>
+<h1>League of Legends schedule</h1>
+
+<div th:each="match : ${matches}">
+  <div>
+    <img th:src="${match.team1.logoUrl}" alt="Team 1 Logo" width="50"/>
+    <span th:text="${match.team1.name}">Team 1</span>
+
+    vs
+
+    <img th:src="${match.team2.logoUrl}" alt="Team 2 Logo" width="50"/>
+    <span th:text="${match.team2.name}">Team 2</span>
+      <p th:text="${#temporals.format(match.scheduledTime, 'yyyy-MM-dd HH:mm')}"></p>
+  </div>
 </div>
-<div class="container">
-    <h1>Schedule</h1>
-    <div th:each="match : ${matches}" style="margin-bottom: 1.5rem; display: flex; align-items: center; background: #222; padding: 1rem; border-radius: 6px;">
-        <img th:src="${match.team1.logoUrl}" alt="Team 1 Logo" width="50" style="margin-right: 1rem;"/>
-        <span th:text="${match.team1.name}" style="font-weight: 600; color: #1de9b6; margin-right: 1rem;">Team 1</span>
-        <span style="margin: 0 1rem; color: #e0e0e0;">vs</span>
-        <img th:src="${match.team2.logoUrl}" alt="Team 2 Logo" width="50" style="margin-right: 1rem;"/>
-        <span th:text="${match.team2.name}" style="font-weight: 600; color: #1de9b6; margin-right: 1rem;">Team 2</span>
-        <span th:text="${#temporals.format(match.scheduledTime, 'yyyy-MM-dd HH:mm')}" style="margin-left: auto; color: #b2dfdb;"></span>
-    </div>
-</div>
+
+<br/>
+<a th:href="@{login}">Admin Login</a>
 </body>
 </html>
